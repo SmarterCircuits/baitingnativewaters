@@ -26,11 +26,16 @@
         <span class="brand-text">Baiting Native Waters</span>
       </a>
 
-      <nav class="nav" aria-label="Primary">
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle-icon" aria-hidden="true">☰</span>
+        <span class="nav-toggle-text">Menu</span>
+      </button>
+
+      <nav id="site-nav" class="nav" aria-label="Primary">
         <a href="#videos">Videos</a>
         <a href="#what">What you’ll see</a>
         <a href="#shop">Shop</a>
-        <a href="#contact">Contact</a>
+        <a class="nav-cta" href="#contact">Contact</a>
       </nav>
     </div>
   </header>
@@ -57,7 +62,11 @@
             </div>
             <div class="mini-item">
               <div class="mini-kicker">Channel</div>
-              <div class="mini-text"><a href="https://youtube.com/@baitingnativewaters" target="_blank" rel="noopener">youtube.com/@baitingnativewaters</a></div>
+              <div class="mini-text">
+                <a href="https://youtube.com/@baitingnativewaters" target="_blank" rel="noopener">
+                  youtube.com/@baitingnativewaters
+                </a>
+              </div>
             </div>
           </div>
 
@@ -79,7 +88,7 @@
               </iframe>
             </div>
             <p class="card-meta">
-              This embed points to the currently latest video we can resolve (“Perch Series 1 - Frosted White Jerkbait Lure”). :contentReference[oaicite:2]{index=2}
+              Embedded: “Perch Series 1 - Frosted White Jerkbait Lure”
             </p>
           </div>
         </div>
@@ -200,6 +209,34 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Mobile nav toggle
+    (function () {
+      const btn = document.querySelector(".nav-toggle");
+      const nav = document.getElementById("site-nav");
+      if (!btn || !nav) return;
+
+      const closeNav = () => {
+        nav.classList.remove("is-open");
+        btn.setAttribute("aria-expanded", "false");
+      };
+
+      btn.addEventListener("click", () => {
+        const isOpen = nav.classList.toggle("is-open");
+        btn.setAttribute("aria-expanded", String(isOpen));
+      });
+
+      // Close on link tap (nice on mobile)
+      nav.addEventListener("click", (e) => {
+        const a = e.target.closest("a");
+        if (a) closeNav();
+      });
+
+      // Close when resizing up to desktop
+      window.addEventListener("resize", () => {
+        if (window.matchMedia("(min-width: 901px)").matches) closeNav();
+      });
+    })();
   </script>
 </body>
 </html>
